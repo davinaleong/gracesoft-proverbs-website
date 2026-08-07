@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GraceSoft Proverbs — a chapter a day, no plan required</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@400;500;600&display=swap');
+
+:root{
+  --bg: #fafafa;
+  --surface: #ffffff;
+  --text-primary: #0e0e0e;
+  --text-secondary: #4c4c4c;
+  --text-muted: #a3a3a3;
+  --border: #d6d6d6;
+  --border-strong: #a3a3a3;
+  --accent: #5544ed;
+  --on-accent: #ffffff;
+  --accent-tint-bg: #f6f5ff;
+  --accent-tint-text: #4636d3;
+  --shadow: 0 1px 2px rgba(14,14,14,0.04), 0 8px 24px rgba(14,14,14,0.05);
+}
+
+html[data-theme="dark"]{
+  --bg: #0e0e0e;
+  --surface: #1e1e1e;
+  --text-primary: #fafafa;
+  --text-secondary: #d6d6d6;
+  --text-muted: #a3a3a3;
+  --border: #4c4c4c;
+  --border-strong: #6f6f6f;
+  --accent: #8d80fe;
+  --on-accent: #0e0e0e;
+  --accent-tint-bg: #1f1a51;
+  --accent-tint-text: #b1a8ff;
+  --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 30px rgba(0,0,0,0.35);
+}
+
+*{ box-sizing: border-box; }
+html{ scroll-behavior: smooth; }
+body{
+  margin:0;
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: 'Montserrat', sans-serif;
+  transition: background .35s ease, color .35s ease;
+  -webkit-font-smoothing: antialiased;
+}
+img,svg{ display:block; }
+a{ color: inherit; text-decoration: none; }
+
+.wrap{ max-width: 1120px; margin: 0 auto; padding: 0 28px; }
+
+/* ---------- nav ---------- */
+header.nav{
+  position: sticky; top:0; z-index: 40;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-inner{
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 18px 0;
+}
+.wordmark{ display:flex; align-items:baseline; gap:6px; font-weight:500; }
+.wordmark .g{ font-family:'Montserrat',sans-serif; font-size: 1.05rem; letter-spacing: .01em; color: var(--text-primary); }
+.wordmark .p{ font-family:'Playfair Display', serif; font-style: italic; font-size: 1.15rem; color: var(--accent); }
+.nav-actions{ display:flex; align-items:center; gap:18px; }
+.nav-link{ font-size:.85rem; color: var(--text-secondary); font-weight:500; }
+.nav-link:hover{ color: var(--text-primary); }
+
+.theme-toggle{
+  width:40px; height:40px; border-radius:999px;
+  border:1px solid var(--border);
+  background: var(--surface);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer;
+  transition: border-color .2s ease, transform .2s ease;
+}
+.theme-toggle:hover{ border-color: var(--border-strong); }
+.theme-toggle:active{ transform: scale(.94); }
+.theme-toggle svg{ width:18px; height:18px; stroke: var(--text-secondary); }
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding: 13px 22px; border-radius: 10px;
+  font-family:'Montserrat',sans-serif; font-weight:500; font-size:.9rem;
+  border:1px solid transparent; cursor:pointer;
+  transition: transform .15s ease, opacity .15s ease, border-color .2s ease;
+}
+.btn:active{ transform: scale(.97); }
+.btn-fill{ background: var(--accent); color: var(--on-accent); }
+.btn-fill:hover{ opacity:.9; }
+.btn-outline{ background: transparent; border-color: var(--border); color: var(--text-primary); }
+.btn-outline:hover{ border-color: var(--border-strong); }
+.btn-disabled{ background: transparent; border-color: var(--border); color: var(--text-muted); cursor: default; }
+
+/* ---------- eyebrow / labels ---------- */
+.eyebrow{
+  font-size: .72rem; font-weight:600; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--text-muted);
+}
+.eyebrow.accent{ color: var(--accent); }
+
+/* ---------- hero ---------- */
+.hero{ padding: 76px 0 40px; }
+.hero-grid{ display:grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items:center; }
+.hero h1{
+  font-family:'Playfair Display', serif; font-weight:500;
+  font-size: clamp(2.6rem, 5.4vw, 4.4rem);
+  line-height: 1.04; letter-spacing: -.01em;
+  margin: 14px 0 22px;
+}
+.hero h1 .num{ color: var(--accent); font-style: italic; }
+.hero p.lede{
+  font-size: 1.05rem; line-height:1.65; color: var(--text-secondary);
+  max-width: 46ch; margin: 0 0 30px;
+}
+.cta-row{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom: 18px; }
+.cta-note{ font-size:.8rem; color: var(--text-muted); }
+
+/* calendar strip */
+.calendar-strip{ margin-top: 40px; }
+.calendar-strip .caption{ font-size:.78rem; color: var(--text-muted); margin-bottom: 10px; }
+.cal-grid{ display:grid; grid-template-columns: repeat(31, 1fr); gap:5px; }
+.cal-cell{
+  aspect-ratio: 1; border-radius: 5px; border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  font-size: .58rem; color: var(--text-muted); font-weight:500;
+}
+.cal-cell.today{
+  background: var(--accent); border-color: var(--accent); color: var(--on-accent);
+  font-weight:600;
+}
+
+/* phone mockup */
+.phone{
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  padding: 22px 22px 26px;
+  box-shadow: var(--shadow);
+  max-width: 320px; margin: 0 auto;
+}
+.phone-badge{
+  display:inline-block; font-size:.62rem; font-weight:600; letter-spacing:.04em;
+  background: var(--accent-tint-bg); color: var(--accent-tint-text);
+  padding: 4px 9px; border-radius: 999px; margin-bottom: 14px;
+}
+.phone h3{
+  font-family:'Playfair Display', serif; font-weight:500; font-size:1.7rem; margin: 0 0 10px;
+}
+.progress-track{ height:5px; border-radius:999px; background: var(--border); overflow:hidden; margin-bottom:20px; }
+.progress-fill{ height:100%; background: var(--accent); border-radius:999px; }
+.verse-line{ display:flex; gap:10px; align-items:flex-start; margin-bottom: 13px; }
+.verse-num{ font-size:.65rem; color: var(--text-muted); width:14px; padding-top:3px; flex-shrink:0; }
+.verse-bar{ height:9px; border-radius:5px; background: var(--border); flex:1; margin-top:2px; }
+
+/* ---------- generic section ---------- */
+section{ padding: 84px 0; border-top: 1px solid var(--border); }
+.section-head{ max-width: 640px; margin-bottom: 44px; }
+.section-head h2{
+  font-family:'Playfair Display', serif; font-weight:500; font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+  margin: 10px 0 14px; letter-spacing:-.01em;
+}
+.section-head p{ color: var(--text-secondary); line-height:1.65; font-size: 1rem; }
+
+/* ---------- translations ---------- */
+.trans-grid{ display:grid; grid-template-columns: repeat(5, 1fr); gap:16px; }
+.trans-card{
+  background: var(--surface); border:1px solid var(--border); border-radius:14px;
+  padding: 22px 18px; transition: border-color .2s ease, transform .2s ease;
+}
+.trans-card:hover{ border-color: var(--accent); transform: translateY(-2px); }
+.trans-abbr{
+  font-family:'Playfair Display', serif; font-style: italic; font-size:1.5rem; color: var(--accent); margin-bottom:10px;
+}
+.trans-name{ font-weight:600; font-size:.92rem; margin-bottom:8px; }
+.trans-desc{ font-size:.82rem; color: var(--text-secondary); line-height:1.5; margin-bottom:14px; min-height: 56px; }
+.trans-credit{ font-size:.72rem; color: var(--text-muted); border-top:1px solid var(--border); padding-top:10px; }
+
+/* ---------- themes ---------- */
+.theme-group{ margin-bottom: 38px; }
+.theme-group:last-child{ margin-bottom:0; }
+.theme-group-label{
+  font-size:.72rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase;
+  color: var(--text-muted); margin-bottom: 16px;
+}
+.swatch-grid{ display:grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap:14px; }
+.swatch{
+  border-radius: 14px; overflow:hidden; border:1px solid var(--border);
+  cursor:default; transition: transform .15s ease, box-shadow .15s ease;
+}
+.swatch:hover{ transform: translateY(-3px); box-shadow: var(--shadow); }
+.swatch-top{ height: 64px; display:flex; align-items:flex-end; padding: 10px; }
+.swatch-card{ width: 34px; height: 20px; border-radius:5px; }
+.swatch-bottom{ padding: 10px 12px 12px; background: var(--surface); }
+.swatch-name{ font-size:.78rem; font-weight:500; }
+.swatch-dot{ width:9px; height:9px; border-radius:50%; display:inline-block; margin-right:6px; vertical-align:middle; }
+
+/* ---------- features ---------- */
+.feat-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--border); border:1px solid var(--border); border-radius: 16px; overflow:hidden; }
+.feat-card{ background: var(--surface); padding: 30px 26px; }
+.feat-mark{ width:26px; height:2px; background: var(--accent); margin-bottom: 18px; }
+.feat-card h4{ font-size:1rem; font-weight:600; margin: 0 0 10px; }
+.feat-card p{ font-size:.86rem; color: var(--text-secondary); line-height:1.6; margin:0; }
+
+/* ---------- footer / final cta ---------- */
+.final-cta{ text-align:center; padding: 90px 0 60px; }
+.final-cta h2{
+  font-family:'Playfair Display', serif; font-weight:500; font-size: clamp(2rem, 4vw, 3rem);
+  margin: 0 0 18px;
+}
+.final-cta p{ color: var(--text-secondary); max-width: 46ch; margin: 0 auto 32px; line-height:1.6; }
+.final-cta .cta-row{ justify-content:center; }
+
+footer{ border-top:1px solid var(--border); padding: 34px 0; }
+.footer-inner{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+.footer-inner p{ font-size:.78rem; color: var(--text-muted); margin:0; }
+.footer-links{ display:flex; gap: 20px; }
+.footer-links a{ font-size:.78rem; color: var(--text-secondary); }
+.footer-links a:hover{ color: var(--accent); }
+
+@media (max-width: 860px){
+  .hero-grid{ grid-template-columns: 1fr; }
+  .phone{ margin-top: 20px; }
+  .trans-grid{ grid-template-columns: repeat(2, 1fr); }
+  .feat-grid{ grid-template-columns: 1fr; }
+  .cal-grid{ grid-template-columns: repeat(15, 1fr); }
+}
+@media (max-width: 520px){
+  .trans-grid{ grid-template-columns: 1fr; }
+  .cta-row{ flex-direction:column; align-items:stretch; }
+  .btn{ width:100%; }
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <div class="wordmark"><span class="g">GraceSoft</span><span class="p">Proverbs</span></div>
+    <div class="nav-actions">
+      <a class="nav-link" href="#translations">Translations</a>
+      <a class="nav-link" href="#themes">Themes</a>
+      <a class="nav-link" href="#get-app">Get the app</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle light and dark mode">
+        <svg id="iconSun" viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M4.4 4.4l1.7 1.7M17.9 17.9l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.4 19.6l1.7-1.7M17.9 6.1l1.7-1.7"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero" style="border-top:none;">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow accent" id="todayLabel">Today — Loading</span>
+        <h1>Proverbs <span class="num" id="chapterNum">6</span>.</h1>
+        <p class="lede">Thirty-one chapters, thirty-one days in the month. Whatever the date is, today's reading is already chosen — the 6th brings Proverbs 6, the 19th brings Proverbs 19. Nothing to schedule, nothing to fall behind on.</p>
+        <div class="cta-row">
+          <a class="btn btn-fill" href="mailto:davinaleong@gracesoft.com?subject=Notify%20me%20—%20GraceSoft%20Proverbs">Get notified at launch</a>
+          <span class="btn btn-disabled" style="cursor:default;">iOS first — Android to follow</span>
+        </div>
+        <p class="cta-note">Free. No account. Nothing tracked.</p>
+
+        <div class="calendar-strip">
+          <p class="caption">Every day of the month, mapped to its chapter</p>
+          <div class="cal-grid" id="calGrid"></div>
+        </div>
+      </div>
+
+      <div class="phone">
+        <span class="phone-badge">WEB</span>
+        <h3 id="phoneChapter">Proverbs 6</h3>
+        <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:19%"></div></div>
+        <div id="verseLines"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRANSLATIONS -->
+  <section id="translations">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Translations</span>
+        <h2>Five translations, one chapter a day</h2>
+        <p>Every translation carries the same day's chapter, so switching mid-month never breaks your place. All five are in the public domain — nothing to license, nothing to pay for.</p>
+      </div>
+      <div class="trans-grid">
+        <div class="trans-card">
+          <div class="trans-abbr">WEB</div>
+          <div class="trans-name">World English Bible</div>
+          <div class="trans-desc">A modern, plain-language update of the American Standard Version.</div>
+          <div class="trans-credit">Public domain · 2000</div>
+        </div>
+        <div class="trans-card">
+          <div class="trans-abbr">KJV</div>
+          <div class="trans-name">King James Version</div>
+          <div class="trans-desc">The 1611 classic — familiar cadence, four centuries in.</div>
+          <div class="trans-credit">Public domain · 1611</div>
+        </div>
+        <div class="trans-card">
+          <div class="trans-abbr">ASV</div>
+          <div class="trans-name">American Standard Version</div>
+          <div class="trans-desc">A close, literal American revision from the turn of the 20th century.</div>
+          <div class="trans-credit">Public domain · 1901</div>
+        </div>
+        <div class="trans-card">
+          <div class="trans-abbr">YLT</div>
+          <div class="trans-name">Young's Literal Translation</div>
+          <div class="trans-desc">Word-for-word literalism, built for readers who want the structure kept intact.</div>
+          <div class="trans-credit">Public domain · 1898</div>
+        </div>
+        <div class="trans-card">
+          <div class="trans-abbr">DRA</div>
+          <div class="trans-name">Douay-Rheims</div>
+          <div class="trans-desc">The historic Catholic translation, rendered from the Latin Vulgate.</div>
+          <div class="trans-credit">Public domain · 1610 (Challoner rev. 1752)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THEMES -->
+  <section id="themes">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Reading themes</span>
+        <h2>Eighteen ways to read</h2>
+        <p>Reading themes are separate from the app's own light or dark mode — set the interface to dark and still read in Sepia, or keep everything neutral. Four defaults to start, more to grow into.</p>
+      </div>
+
+      <div class="theme-group">
+        <div class="theme-group-label">Defaults — Neutral &amp; GraceSoft</div>
+        <div class="swatch-grid">
+          <div class="swatch"><div class="swatch-top" style="background:#ffffff;"><div class="swatch-card" style="background:#fafafa;border:1px solid #d6d6d6;"></div></div><div class="swatch-bottom"><span class="swatch-dot" style="background:#0e0e0e;"></span><span class="swatch-name">Light</span></div></div>
+          <div class="swatch"><div class="swatch-top" style="background:#0e0e0e;"><div class="swatch-card" style="background:#1e1e1e;"></div></div><div class="swatch-bottom"><span class="swatch-dot" style="background:#fafafa;"></span><span class="swatch-name">Dark</span></div></div>
+          <div class="swatch"><div class="swatch-top" style="background:#ffffff;"><div class="swatch-card" style="background:#fafafa;border:1px solid #d6d6d6;"></div></div><div class="swatch-bottom"><span class="swatch-dot" style="background:#5544ed;"></span><span class="swatch-name">GraceSoft Light</span></div></div>
+          <div class="swatch"><div class="swatch-top" style="background:#0e0e0e;"><div class="swatch-card" style="background:#1e1e1e;"></div></div><div class="swatch-bottom"><span class="swatch-dot" style="background:#8d80fe;"></span><span class="swatch-name">GraceSoft Dark</span></div></div>
+        </div>
+      </div>
+
+      <div class="theme-group">
+        <div class="theme-group-label">Reading classics</div>
+        <div class="swatch-grid">
+          <div class="swatch"><div class="swatch-top" style="background:#f0e6d2;"><div class="swatch-card" style="background:#e4d5b7;"></div></div><div class="swatch-bottom"><span class="swatch-dot" style="background:#854f0b;"></span><span class="swatch-name">Sepia</span></div></div>
+          <div class="swatch"><div class="swatch-top" style="background:#f7f5ef;"><div class="swatch-card" style="background:#ece8dc;"></div></div><div class="swatch-bottom"><span class="swatch-dot" style="background:#5f5e5a;"></span><span class="swatch-name">Paper</span></div></div>
+          <div class="swatch"><div class="swatch-top" style="background:#f3ece1;"><div class="swatch-card" style="background:#ddc9a3;"></div></div><div class="swatch-bottom"><span class="swatch-dot" style="background:#a32d2d;"></span><span class="swatch-name">Parchment</span></div></div>
+          <div class="swatch"><div class="swatch-top" style="background:#0c2036;"><div class="swatch-card" style="background:#14304f;"></div></div><div class="swatch-bottom"><span class="swatch-dot" style="background:#f0997b;"></span><span class="swatch-name">Midnight blue</span></div></div>
+          <div class="swatch"><div class="swatch-top" style="background:#14200d;"><div class="swatch-card" style="background:#1f2f16;"></div></div><div class="swatch-bottom"><span class="swatch-dot" style="background:#97c459;"></span><span class="swatch-name">Forest</span></div></div>
+          <div class="swatch"><div class="swatch-top" style="background:#000000;"><div class="swatch-card" style="background:#ffffff;"></div></div><div class="swatch-bottom"><span class="swatch-dot" style="background:#ffde00;"></span><span class="swatch-name">High contrast</span></div></div>
+        </div>
+      </div>
+
+      <div class="theme-group">
+        <div class="theme-group-label">Expressive</div>
+        <div class="swatch-grid">
+          <div class="swatch"><div class="swatch-top" style="background:#fff5fa;"><div class="swatch-card" style="background:#ffe3f0;"></div></div><div class="swatch-bottom"><span class="swatch-dot" style="background:#b8106b;"></span><span class="swatch-name">Magenta Pulse</span></div></div>
+          <div class="swatch"><div class="swatch-top" style="background:#fdf2f5;"><div class="swatch-card" style="background:#fbe4ea;"></div></div><div class="swatch-bottom"><span class="swatch-dot" style="background:#b23a63;"></span><span class="swatch-name">Powder Blush</span></div></div>
+          <div class="swatch"><div class="swatch-top" style="background:#f5efe8;"><div class="swatch-card" style="background:#e8ddd0;"></div></div><div class="swatch-bottom"><span class="swatch-dot" style="background:#6b4a35;"></span><span class="swatch-name">Cocoa Neutral</span></div></div>
+          <div class="swatch"><div class="swatch-top" style="background:#0d0d0d;"><div class="swatch-card" style="background:#1a1a1a;"></div></div><div class="swatch-bottom"><span class="swatch-dot" style="background:#f5d800;"></span><span class="swatch-name">Giallo Corsa</span></div></div>
+          <div class="swatch"><div class="swatch-top" style="background:#fdf6ec;"><div class="swatch-card" style="background:#e8cba3;"></div></div><div class="swatch-bottom"><span class="swatch-dot" style="background:#7a4a1e;"></span><span class="swatch-name">Copper Cream</span></div></div>
+          <div class="swatch"><div class="swatch-top" style="background:#ffffff;"><div class="swatch-card" style="background:#fde8ea;"></div></div><div class="swatch-bottom"><span class="swatch-dot" style="background:#c81f30;"></span><span class="swatch-name">Majulah</span></div></div>
+          <div class="swatch"><div class="swatch-top" style="background:#3b0a14;"><div class="swatch-card" style="background:#4a1220;"></div></div><div class="swatch-bottom"><span class="swatch-dot" style="background:#c9a227;"></span><span class="swatch-name">Gilt Edge</span></div></div>
+          <div class="swatch"><div class="swatch-top" style="background:#f4f6f8;"><div class="swatch-card" style="background:#e3e8ec;"></div></div><div class="swatch-bottom"><span class="swatch-dot" style="background:#1f3a5f;"></span><span class="swatch-name">Boardroom</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Built to be left alone</span>
+        <h2>Everything it needs, nothing it doesn't</h2>
+        <p>No servers to go down, no accounts to recover, no sync to fail. The app carries everything it needs from the moment it's installed.</p>
+      </div>
+      <div class="feat-grid">
+        <div class="feat-card"><div class="feat-mark"></div><h4>Offline, always</h4><p>Every chapter, in all five translations, ships inside the app. Reading works with no signal and no loading spinner.</p></div>
+        <div class="feat-card"><div class="feat-mark"></div><h4>No account, ever</h4><p>Nothing to sign up for and nothing to log into. Your settings live on your device, and only there.</p></div>
+        <div class="feat-card"><div class="feat-mark"></div><h4>A gentle reminder</h4><p>Turn on a daily notification and pick the time. It only asks for permission once you switch it on.</p></div>
+        <div class="feat-card"><div class="feat-mark"></div><h4>Size and shape, your call</h4><p>A font-size slider and a serif/sans toggle shape the reading screen around your eyes, not a default.</p></div>
+        <div class="feat-card"><div class="feat-mark"></div><h4>Verse numbers, optional</h4><p>Read with the numbers showing or switch them off, whichever feels less like a reference book.</p></div>
+        <div class="feat-card"><div class="feat-mark"></div><h4>Truly free</h4><p>No ads, no subscription, no in-app purchase. Every translation and every theme is included from install.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section id="get-app" style="border-top: 1px solid var(--border);">
+    <div class="wrap final-cta">
+      <span class="eyebrow accent">Get the app</span>
+      <h2>Start with today's chapter</h2>
+      <p>Launching first on iOS through the App Store, with Android to follow. Install it, and the right chapter is already waiting.</p>
+      <div class="cta-row">
+        <a class="btn btn-fill" href="mailto:davinaleong@gracesoft.com?subject=Notify%20me%20—%20GraceSoft%20Proverbs">Get notified at launch</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <p>© 2026 GraceSoft. All five translations are in the public domain.</p>
+    <div class="footer-links">
+      <a href="mailto:davinaleong@gracesoft.com">Send feedback</a>
+      <a href="#translations">Translations</a>
+      <a href="#themes">Themes</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ---- today's date -> chapter ----
+const today = new Date();
+const dayOfMonth = today.getDate();
+const monthName = today.toLocaleDateString('en-US', { month: 'long' });
+const weekday = today.toLocaleDateString('en-US', { weekday: 'long' });
+
+document.getElementById('todayLabel').textContent = `Today — ${weekday}, ${monthName} ${dayOfMonth}`;
+document.getElementById('chapterNum').textContent = dayOfMonth;
+document.getElementById('phoneChapter').textContent = `Proverbs ${dayOfMonth}`;
+document.getElementById('progressFill').style.width = `${(dayOfMonth/31*100).toFixed(0)}%`;
+
+// calendar strip
+const calGrid = document.getElementById('calGrid');
+for (let i = 1; i <= 31; i++){
+  const cell = document.createElement('div');
+  cell.className = 'cal-cell' + (i === dayOfMonth ? ' today' : '');
+  cell.textContent = i;
+  calGrid.appendChild(cell);
+}
+
+// verse line mockup (illustrative widths, not real scripture text)
+const verseLines = document.getElementById('verseLines');
+const widths = [92, 68, 84, 55, 78, 40];
+widths.forEach((w, i) => {
+  const row = document.createElement('div');
+  row.className = 'verse-line';
+  row.innerHTML = `<span class="verse-num">${i+1}</span><span class="verse-bar" style="max-width:${w}%"></span>`;
+  verseLines.appendChild(row);
+});
+
+// ---- theme toggle ----
+const root = document.documentElement;
+const toggle = document.getElementById('themeToggle');
+const iconSun = document.getElementById('iconSun');
+
+function applyTheme(mode){
+  root.setAttribute('data-theme', mode);
+  if(mode === 'dark'){
+    iconSun.innerHTML = '<path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5Z"/>';
+  } else {
+    iconSun.innerHTML = '<circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M4.4 4.4l1.7 1.7M17.9 17.9l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.4 19.6l1.7-1.7M17.9 6.1l1.7-1.7"/>';
+  }
+}
+
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+applyTheme(prefersDark ? 'dark' : 'light');
+
+toggle.addEventListener('click', () => {
+  const current = root.getAttribute('data-theme');
+  applyTheme(current === 'dark' ? 'light' : 'dark');
+});
+</script>
+
+</body>
+</html>
