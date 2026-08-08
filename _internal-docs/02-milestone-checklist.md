@@ -13,7 +13,7 @@ Tracks the site from its current draft state through to launch. Grouped in the o
 ## Brand & asset readiness
 
 - [ ] Confirm Google Fonts (`Playfair Display`, `Montserrat`) load correctly in a network-restricted or offline test — add a self-hosted fallback if the site must work without external font requests.
-- [ ] Favicon and app icon added (currently missing) — should reuse the app icon once finalized.
+- [x] Favicon and app icon added — using `logo-square.png` from the brand asset set; swap for the final app icon if it ever differs from this mark.
 - [ ] Open Graph / social preview image created for link unfurling (link shares to Slack, iMessage, X, etc. currently have no preview image).
 - [ ] `<title>` and meta description reviewed per page for search/share quality.
 

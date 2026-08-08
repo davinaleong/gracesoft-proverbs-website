@@ -1,17 +1,726 @@
 ---
-
+import Layout from '../layouts/Layout.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout
+  title="GraceSoft Proverbs — a chapter a day, no plan required"
+  description="Proverbs, one chapter a day, matched to the date. Five public-domain translations, eighteen reading themes, fully offline, free forever."
+>
+  <section class="hero" style="border-top:none;">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow accent" id="todayLabel">Today — Loading</span>
+        <h1>Proverbs <span class="num" id="chapterNum">6</span>.</h1>
+        <p class="lede">
+          Thirty-one chapters, thirty-one days in the month. Whatever the
+          date is, today's reading is already chosen — the 6th brings
+          Proverbs 6, the 19th brings Proverbs 19. Nothing to schedule,
+          nothing to fall behind on.
+        </p>
+        <div class="cta-row">
+          <a
+            class="btn btn-fill"
+            href="mailto:davinaleong@gracesoft.com?subject=Notify%20me%20—%20GraceSoft%20Proverbs"
+            >Get notified at launch</a
+          >
+          <span class="btn btn-disabled" style="cursor:default;"
+            >iOS first — Android to follow</span
+          >
+        </div>
+        <p class="cta-note">Free. No account. Nothing tracked.</p>
+
+        <div class="calendar-strip">
+          <p class="caption">Every day of the month, mapped to its chapter</p>
+          <div class="cal-grid" id="calGrid"></div>
+        </div>
+      </div>
+
+      <div class="phone">
+        <span class="phone-badge">WEB</span>
+        <h3 id="phoneChapter">Proverbs 6</h3>
+        <div class="progress-track">
+          <div class="progress-fill" id="progressFill" style="width:19%"></div>
+        </div>
+        <div id="verseLines"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRANSLATIONS -->
+  <section id="translations">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Translations</span>
+        <h2>Five translations, one chapter a day</h2>
+        <p>
+          Every translation carries the same day's chapter, so switching
+          mid-month never breaks your place. All five are in the public
+          domain — nothing to license, nothing to pay for.
+        </p>
+      </div>
+      <div class="trans-grid">
+        <div class="trans-card">
+          <div class="trans-abbr">WEB</div>
+          <div class="trans-name">World English Bible</div>
+          <div class="trans-desc">
+            A modern, plain-language update of the American Standard
+            Version.
+          </div>
+          <div class="trans-credit">Public domain · 2000</div>
+        </div>
+        <div class="trans-card">
+          <div class="trans-abbr">KJV</div>
+          <div class="trans-name">King James Version</div>
+          <div class="trans-desc">
+            The 1611 classic — familiar cadence, four centuries in.
+          </div>
+          <div class="trans-credit">Public domain · 1611</div>
+        </div>
+        <div class="trans-card">
+          <div class="trans-abbr">ASV</div>
+          <div class="trans-name">American Standard Version</div>
+          <div class="trans-desc">
+            A close, literal American revision from the turn of the 20th
+            century.
+          </div>
+          <div class="trans-credit">Public domain · 1901</div>
+        </div>
+        <div class="trans-card">
+          <div class="trans-abbr">YLT</div>
+          <div class="trans-name">Young's Literal Translation</div>
+          <div class="trans-desc">
+            Word-for-word literalism, built for readers who want the
+            structure kept intact.
+          </div>
+          <div class="trans-credit">Public domain · 1898</div>
+        </div>
+        <div class="trans-card">
+          <div class="trans-abbr">DRA</div>
+          <div class="trans-name">Douay-Rheims</div>
+          <div class="trans-desc">
+            The historic Catholic translation, rendered from the Latin
+            Vulgate.
+          </div>
+          <div class="trans-credit">Public domain · 1610 (Challoner rev. 1752)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THEMES -->
+  <section id="themes">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Reading themes</span>
+        <h2>Eighteen ways to read</h2>
+        <p>
+          Reading themes are separate from the app's own light or dark mode
+          — set the interface to dark and still read in Sepia, or keep
+          everything neutral. Four defaults to start, more to grow into.
+        </p>
+      </div>
+
+      <div class="theme-group">
+        <div class="theme-group-label">Defaults — Neutral &amp; GraceSoft</div>
+        <div class="swatch-grid">
+          <div class="swatch">
+            <div class="swatch-top" style="background:#ffffff;">
+              <div class="swatch-card" style="background:#fafafa;border:1px solid #d6d6d6;"></div>
+            </div>
+            <div class="swatch-bottom">
+              <span class="swatch-dot" style="background:#0e0e0e;"></span><span class="swatch-name">Light</span>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-top" style="background:#0e0e0e;">
+              <div class="swatch-card" style="background:#1e1e1e;"></div>
+            </div>
+            <div class="swatch-bottom">
+              <span class="swatch-dot" style="background:#fafafa;"></span><span class="swatch-name">Dark</span>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-top" style="background:#ffffff;">
+              <div class="swatch-card" style="background:#fafafa;border:1px solid #d6d6d6;"></div>
+            </div>
+            <div class="swatch-bottom">
+              <span class="swatch-dot" style="background:#5544ed;"></span><span class="swatch-name">GraceSoft Light</span>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-top" style="background:#0e0e0e;">
+              <div class="swatch-card" style="background:#1e1e1e;"></div>
+            </div>
+            <div class="swatch-bottom">
+              <span class="swatch-dot" style="background:#8d80fe;"></span><span class="swatch-name">GraceSoft Dark</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="theme-group">
+        <div class="theme-group-label">Reading classics</div>
+        <div class="swatch-grid">
+          <div class="swatch">
+            <div class="swatch-top" style="background:#f0e6d2;">
+              <div class="swatch-card" style="background:#e4d5b7;"></div>
+            </div>
+            <div class="swatch-bottom">
+              <span class="swatch-dot" style="background:#854f0b;"></span><span class="swatch-name">Sepia</span>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-top" style="background:#f7f5ef;">
+              <div class="swatch-card" style="background:#ece8dc;"></div>
+            </div>
+            <div class="swatch-bottom">
+              <span class="swatch-dot" style="background:#5f5e5a;"></span><span class="swatch-name">Paper</span>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-top" style="background:#f3ece1;">
+              <div class="swatch-card" style="background:#ddc9a3;"></div>
+            </div>
+            <div class="swatch-bottom">
+              <span class="swatch-dot" style="background:#a32d2d;"></span><span class="swatch-name">Parchment</span>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-top" style="background:#0c2036;">
+              <div class="swatch-card" style="background:#14304f;"></div>
+            </div>
+            <div class="swatch-bottom">
+              <span class="swatch-dot" style="background:#f0997b;"></span><span class="swatch-name">Midnight blue</span>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-top" style="background:#14200d;">
+              <div class="swatch-card" style="background:#1f2f16;"></div>
+            </div>
+            <div class="swatch-bottom">
+              <span class="swatch-dot" style="background:#97c459;"></span><span class="swatch-name">Forest</span>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-top" style="background:#000000;">
+              <div class="swatch-card" style="background:#ffffff;"></div>
+            </div>
+            <div class="swatch-bottom">
+              <span class="swatch-dot" style="background:#ffde00;"></span><span class="swatch-name">High contrast</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="theme-group">
+        <div class="theme-group-label">Expressive</div>
+        <div class="swatch-grid">
+          <div class="swatch">
+            <div class="swatch-top" style="background:#fff5fa;">
+              <div class="swatch-card" style="background:#ffe3f0;"></div>
+            </div>
+            <div class="swatch-bottom">
+              <span class="swatch-dot" style="background:#b8106b;"></span><span class="swatch-name">Magenta Pulse</span>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-top" style="background:#fdf2f5;">
+              <div class="swatch-card" style="background:#fbe4ea;"></div>
+            </div>
+            <div class="swatch-bottom">
+              <span class="swatch-dot" style="background:#b23a63;"></span><span class="swatch-name">Powder Blush</span>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-top" style="background:#f5efe8;">
+              <div class="swatch-card" style="background:#e8ddd0;"></div>
+            </div>
+            <div class="swatch-bottom">
+              <span class="swatch-dot" style="background:#6b4a35;"></span><span class="swatch-name">Cocoa Neutral</span>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-top" style="background:#0d0d0d;">
+              <div class="swatch-card" style="background:#1a1a1a;"></div>
+            </div>
+            <div class="swatch-bottom">
+              <span class="swatch-dot" style="background:#f5d800;"></span><span class="swatch-name">Giallo Corsa</span>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-top" style="background:#fdf6ec;">
+              <div class="swatch-card" style="background:#e8cba3;"></div>
+            </div>
+            <div class="swatch-bottom">
+              <span class="swatch-dot" style="background:#7a4a1e;"></span><span class="swatch-name">Copper Cream</span>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-top" style="background:#ffffff;">
+              <div class="swatch-card" style="background:#fde8ea;"></div>
+            </div>
+            <div class="swatch-bottom">
+              <span class="swatch-dot" style="background:#c81f30;"></span><span class="swatch-name">Majulah</span>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-top" style="background:#3b0a14;">
+              <div class="swatch-card" style="background:#4a1220;"></div>
+            </div>
+            <div class="swatch-bottom">
+              <span class="swatch-dot" style="background:#c9a227;"></span><span class="swatch-name">Gilt Edge</span>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch-top" style="background:#f4f6f8;">
+              <div class="swatch-card" style="background:#e3e8ec;"></div>
+            </div>
+            <div class="swatch-bottom">
+              <span class="swatch-dot" style="background:#1f3a5f;"></span><span class="swatch-name">Boardroom</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Built to be left alone</span>
+        <h2>Everything it needs, nothing it doesn't</h2>
+        <p>
+          No servers to go down, no accounts to recover, no sync to fail.
+          The app carries everything it needs from the moment it's
+          installed.
+        </p>
+      </div>
+      <div class="feat-grid">
+        <div class="feat-card">
+          <div class="feat-mark"></div>
+          <h4>Offline, always</h4>
+          <p>
+            Every chapter, in all five translations, ships inside the app.
+            Reading works with no signal and no loading spinner.
+          </p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-mark"></div>
+          <h4>No account, ever</h4>
+          <p>
+            Nothing to sign up for and nothing to log into. Your settings
+            live on your device, and only there.
+          </p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-mark"></div>
+          <h4>A gentle reminder</h4>
+          <p>
+            Turn on a daily notification and pick the time. It only asks
+            for permission once you switch it on.
+          </p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-mark"></div>
+          <h4>Size and shape, your call</h4>
+          <p>
+            A font-size slider and a serif/sans toggle shape the reading
+            screen around your eyes, not a default.
+          </p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-mark"></div>
+          <h4>Verse numbers, optional</h4>
+          <p>
+            Read with the numbers showing or switch them off, whichever
+            feels less like a reference book.
+          </p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-mark"></div>
+          <h4>Truly free</h4>
+          <p>
+            No ads, no subscription, no in-app purchase. Every translation
+            and every theme is included from install.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section id="get-app" style="border-top: 1px solid var(--border);">
+    <div class="wrap final-cta">
+      <span class="eyebrow accent">Get the app</span>
+      <h2>Start with today's chapter</h2>
+      <p>
+        Launching first on iOS through the App Store, with Android to
+        follow. Install it, and the right chapter is already waiting.
+      </p>
+      <div class="cta-row">
+        <a
+          class="btn btn-fill"
+          href="mailto:davinaleong@gracesoft.com?subject=Notify%20me%20—%20GraceSoft%20Proverbs"
+          >Get notified at launch</a
+        >
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* ---------- hero ---------- */
+  .hero {
+    padding: 76px 0 40px;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    font-size: clamp(2.6rem, 5.4vw, 4.4rem);
+    line-height: 1.04;
+    letter-spacing: -0.01em;
+    margin: 14px 0 22px;
+  }
+  .hero h1 .num {
+    color: var(--accent);
+    font-style: italic;
+  }
+  .hero p.lede {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    max-width: 46ch;
+    margin: 0 0 30px;
+  }
+  .cta-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+  }
+  .cta-note {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  /* calendar strip */
+  .calendar-strip {
+    margin-top: 40px;
+  }
+  .calendar-strip .caption {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(31, 1fr);
+    gap: 5px;
+  }
+  .cal-cell {
+    aspect-ratio: 1;
+    border-radius: 5px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.58rem;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+  .cal-cell.today {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--on-accent);
+    font-weight: 600;
+  }
+
+  /* phone mockup */
+  .phone {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    padding: 22px 22px 26px;
+    box-shadow: var(--shadow);
+    max-width: 320px;
+    margin: 0 auto;
+  }
+  .phone-badge {
+    display: inline-block;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    background: var(--accent-tint-bg);
+    color: var(--accent-tint-text);
+    padding: 4px 9px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+  }
+  .phone h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    font-size: 1.7rem;
+    margin: 0 0 10px;
+  }
+  .progress-track {
+    height: 5px;
+    border-radius: 999px;
+    background: var(--border);
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 999px;
+  }
+  .verse-line {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin-bottom: 13px;
+  }
+  .verse-num {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    width: 14px;
+    padding-top: 3px;
+    flex-shrink: 0;
+  }
+  .verse-bar {
+    height: 9px;
+    border-radius: 5px;
+    background: var(--border);
+    flex: 1;
+    margin-top: 2px;
+  }
+
+  /* ---------- translations ---------- */
+  .trans-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+  }
+  .trans-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 18px;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .trans-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .trans-abbr {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.5rem;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .trans-name {
+    font-weight: 600;
+    font-size: 0.92rem;
+    margin-bottom: 8px;
+  }
+  .trans-desc {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 14px;
+    min-height: 56px;
+  }
+  .trans-credit {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+  }
+
+  /* ---------- themes ---------- */
+  .theme-group {
+    margin-bottom: 38px;
+  }
+  .theme-group:last-child {
+    margin-bottom: 0;
+  }
+  .theme-group-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+  .swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+    gap: 14px;
+  }
+  .swatch {
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    cursor: default;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .swatch:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+  }
+  .swatch-top {
+    height: 64px;
+    display: flex;
+    align-items: flex-end;
+    padding: 10px;
+  }
+  .swatch-card {
+    width: 34px;
+    height: 20px;
+    border-radius: 5px;
+  }
+  .swatch-bottom {
+    padding: 10px 12px 12px;
+    background: var(--surface);
+  }
+  .swatch-name {
+    font-size: 0.78rem;
+    font-weight: 500;
+  }
+  .swatch-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  /* ---------- features ---------- */
+  .feat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .feat-card {
+    background: var(--surface);
+    padding: 30px 26px;
+  }
+  .feat-mark {
+    width: 26px;
+    height: 2px;
+    background: var(--accent);
+    margin-bottom: 18px;
+  }
+  .feat-card h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 10px;
+  }
+  .feat-card p {
+    font-size: 0.86rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ---------- final cta ---------- */
+  .final-cta {
+    text-align: center;
+    padding: 90px 0 60px;
+  }
+  .final-cta h2 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin: 0 0 18px;
+  }
+  .final-cta p {
+    color: var(--text-secondary);
+    max-width: 46ch;
+    margin: 0 auto 32px;
+    line-height: 1.6;
+  }
+  .final-cta .cta-row {
+    justify-content: center;
+  }
+
+  @media (max-width: 860px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+    }
+    .phone {
+      margin-top: 20px;
+    }
+    .trans-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .feat-grid {
+      grid-template-columns: 1fr;
+    }
+    .cal-grid {
+      grid-template-columns: repeat(15, 1fr);
+    }
+  }
+  @media (max-width: 520px) {
+    .trans-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  // ---- today's date -> chapter ----
+  const today = new Date();
+  const dayOfMonth = today.getDate();
+  const monthName = today.toLocaleDateString('en-US', { month: 'long' });
+  const weekday = today.toLocaleDateString('en-US', { weekday: 'long' });
+
+  const todayLabel = document.getElementById('todayLabel');
+  const chapterNum = document.getElementById('chapterNum');
+  const phoneChapter = document.getElementById('phoneChapter');
+  const progressFill = document.getElementById('progressFill');
+
+  if (todayLabel)
+    todayLabel.textContent = `Today — ${weekday}, ${monthName} ${dayOfMonth}`;
+  if (chapterNum) chapterNum.textContent = String(dayOfMonth);
+  if (phoneChapter) phoneChapter.textContent = `Proverbs ${dayOfMonth}`;
+  if (progressFill instanceof HTMLElement)
+    progressFill.style.width = `${((dayOfMonth / 31) * 100).toFixed(0)}%`;
+
+  // calendar strip
+  const calGrid = document.getElementById('calGrid');
+  if (calGrid) {
+    for (let i = 1; i <= 31; i++) {
+      const cell = document.createElement('div');
+      cell.className = 'cal-cell' + (i === dayOfMonth ? ' today' : '');
+      cell.textContent = String(i);
+      calGrid.appendChild(cell);
+    }
+  }
+
+  // verse line mockup (illustrative widths, not real scripture text)
+  const verseLines = document.getElementById('verseLines');
+  if (verseLines) {
+    const widths = [92, 68, 84, 55, 78, 40];
+    widths.forEach((w, i) => {
+      const row = document.createElement('div');
+      row.className = 'verse-line';
+      row.innerHTML = `<span class="verse-num">${i + 1}</span><span class="verse-bar" style="max-width:${w}%"></span>`;
+      verseLines.appendChild(row);
+    });
+  }
+</script>
