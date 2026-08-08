@@ -425,7 +425,7 @@ import Layout from '../layouts/Layout.astro';
     grid-template-columns: repeat(31, 1fr);
     gap: 5px;
   }
-  .cal-cell {
+  :global(.cal-cell) {
     aspect-ratio: 1;
     border-radius: 5px;
     border: 1px solid var(--border);
@@ -436,7 +436,7 @@ import Layout from '../layouts/Layout.astro';
     color: var(--text-muted);
     font-weight: 500;
   }
-  .cal-cell.today {
+  :global(.cal-cell.today) {
     background: var(--accent);
     border-color: var(--accent);
     color: var(--on-accent);
@@ -482,20 +482,20 @@ import Layout from '../layouts/Layout.astro';
     background: var(--accent);
     border-radius: 999px;
   }
-  .verse-line {
+  :global(.verse-line) {
     display: flex;
     gap: 10px;
     align-items: flex-start;
     margin-bottom: 13px;
   }
-  .verse-num {
+  :global(.verse-num) {
     font-size: 0.65rem;
     color: var(--text-muted);
     width: 14px;
     padding-top: 3px;
     flex-shrink: 0;
   }
-  .verse-bar {
+  :global(.verse-bar) {
     height: 9px;
     border-radius: 5px;
     background: var(--border);

@@ -66,6 +66,18 @@ The brief describes four static HTML files sharing `assets/styles.css` / `assets
 
 **Also noticed, not yet acted on:** the "Added an Capture form" commit replaced the `contactFormEmbedUrl`-placeholder pattern on `support.astro` with a live embed (`https://capture.gracesoft.dev/form/frm_a799c8335185b4d7ec026ddbdd8905df`). That's a real third-party form now collecting name/email/message, which `privacy.astro`'s "What we collect" and "Third-party services" sections don't yet mention — both currently say the site collects nothing server-side. Flagged to the site owner directly; not edited here since it's a content/disclosure decision, not a layout one.
 
+## Session 5 — bug: today's calendar cell wasn't highlighted
+
+**Reported:** the current day of the month wasn't visually highlighted in the Home hero's calendar strip.
+
+**Root cause:** Astro scopes a page's `<style>` block by adding a hashed `data-astro-cid-*` attribute to every element written in that page's template, and compiling each selector to require that attribute. The calendar cells and phone-mockup verse bars aren't in the template — they're created at runtime by the page's `<script>` (`document.createElement('div')`, per Session 1) — so they never get the scope attribute, and every rule targeting them (`.cal-cell`, `.cal-cell.today`, `.verse-line`, `.verse-num`, `.verse-bar`) silently failed to match. Confirmed via computed styles: the "today" cell and a plain cell were pixel-identical (transparent background, `0px` border-radius) before the fix. This bug shipped in Session 1 and affected the whole calendar strip and verse-bar mockup the entire time, not just the highlight — it just wasn't obvious because the surrounding layout (grid, gaps) still worked and the missing border/rounding read as "plain."
+
+**Fix:** wrapped those five selectors in `:global(...)` inside `index.astro`'s `<style>` block, which tells Astro's compiler to emit them unscoped. Left every other rule in that block alone, since their target elements are static template content and scoping already worked correctly for them (including `.progress-fill`, which is a static element whose inline `width` is set by JS — no scoping issue there).
+
+**Verified:** today's cell now has the accent background/border and bold text; other cells have their border and radius back; verse bars render as rounded gray bars again. No console errors.
+
+**Worth knowing for future JS-inserted DOM in this project:** any element created client-side in an Astro page needs its styling rules either in `global.css` or wrapped in `:global()` inside the page's scoped `<style>` block — scoped selectors never match runtime-created nodes.
+
 ## Open questions for the site owner (not blocking, tracked here so they aren't lost)
 
 - Legal review of Privacy/Terms hasn't happened — both pages will ship with the "not reviewed by a lawyer" notice the brief calls for, per `02-milestone-checklist.md`'s first item.
