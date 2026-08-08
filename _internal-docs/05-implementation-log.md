@@ -56,6 +56,16 @@ The brief describes four static HTML files sharing `assets/styles.css` / `assets
 
 **Still open:** `contactFormEmbedUrl` is empty — the actual form (and which service to use) is up to the site owner to set up and paste in.
 
+## Session 4 — Wordmark logo in the nav
+
+**Requested:** replace the "GraceSoft Proverbs" text wordmark in the nav with the `wm` logo asset.
+
+**Built:** `Layout.astro`'s wordmark link now renders two `<img>`s — `wm-b.svg` (black, for light theme) and `wm-w.svg` (white, for dark theme) — with CSS driven by the existing `data-theme` attribute swapping which one is visible (`.wordmark-logo-dark` hidden by default, `html[data-theme='dark'] .wordmark-logo-light` hidden / `.wordmark-logo-dark` shown). No JS changes needed since the theme toggle already sets `data-theme`. Removed the now-unused `.wordmark .g` / `.wordmark .p` text-span styles from `global.css`, including their mobile override.
+
+**Also fixed, same session:** two commits landed from outside this conversation while this was in progress (`ee9d8b6` "Added an Capture form" and `437e469` "Reimported the assets"). The second one flattened `public/assets/*` into `public/*` directly (so assets are now at `/wm-b.svg` etc. instead of `/assets/wm-b.svg`) and swapped the favicon from `favicon.ico`/`favicon.svg` to `logo-square.png` — but it appears to have picked up this session's in-progress `Layout.astro`/`global.css` edits (the wordmark-swap code) without updating the asset paths inside them to match the new flat layout, so the wordmark images and favicon were 404ing. Fixed by updating the three references in `Layout.astro` from `/assets/wm-b.svg`, `/assets/wm-w.svg`, `/assets/logo-square.png` to `/wm-b.svg`, `/wm-w.svg`, `/logo-square.png`. Verified all three now return 200 and render on all four pages, in both themes, with no console errors.
+
+**Also noticed, not yet acted on:** the "Added an Capture form" commit replaced the `contactFormEmbedUrl`-placeholder pattern on `support.astro` with a live embed (`https://capture.gracesoft.dev/form/frm_a799c8335185b4d7ec026ddbdd8905df`). That's a real third-party form now collecting name/email/message, which `privacy.astro`'s "What we collect" and "Third-party services" sections don't yet mention — both currently say the site collects nothing server-side. Flagged to the site owner directly; not edited here since it's a content/disclosure decision, not a layout one.
+
 ## Open questions for the site owner (not blocking, tracked here so they aren't lost)
 
 - Legal review of Privacy/Terms hasn't happened — both pages will ship with the "not reviewed by a lawyer" notice the brief calls for, per `02-milestone-checklist.md`'s first item.
