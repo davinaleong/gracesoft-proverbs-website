@@ -1,0 +1,94 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const faqs = [
+  {
+    q: 'What platforms is GraceSoft Proverbs available on?',
+    a: "The app is launching first on iOS through the App Store, with Android to follow. There's no fixed date for the Android release yet — use the mailto link above and we'll let you know when either becomes available.",
+  },
+  {
+    q: 'Is it really free, with no ads or subscription?',
+    a: 'Yes. Every translation and every reading theme is included from install, with no ads, no subscription, and no in-app purchase.',
+  },
+  {
+    q: 'Do I need an account?',
+    a: "No. There's nothing to sign up for and nothing to log into. Your reading preferences live only on your device.",
+  },
+  {
+    q: 'Does the app work offline?',
+    a: 'Yes, fully. All five translations and all reading themes are bundled into the app at install time, so reading works with no signal and no loading spinner — nothing is streamed or downloaded on demand.',
+  },
+  {
+    q: "How does the day-of-month to chapter mapping work?",
+    a: "Each day of the month maps to the Proverbs chapter of the same number — the 6th brings Proverbs 6, the 19th brings Proverbs 19. Since Proverbs has 31 chapters and months can run shorter, months with fewer than 31 days simply have no chapter 29–31 reading on that cycle.",
+  },
+  {
+    q: 'Can I read a past or future day, or catch up if I miss one?',
+    a: "Yes — the date-matched chapter is what's highlighted by default, but every chapter is available any time. There's no streak to lose and nothing to fall behind on.",
+  },
+  {
+    q: 'When does the app ask for notification permission?',
+    a: "Only at the moment you turn the daily reading reminder on in Settings. The app never asks for notification permission on first launch or for any other feature — it's requested once, tied directly to that one toggle.",
+  },
+  {
+    q: 'What happens to my settings if I reinstall the app?',
+    a: "Settings are stored on your device, not on a server, so uninstalling the app removes them. Reinstalling starts fresh with the app's defaults — there's no account to sign back into that would restore your previous choices.",
+  },
+  {
+    q: 'Is my data tracked or collected?',
+    a: 'No. The app contains no analytics, no crash reporting that phones home, and no advertising identifier. See the Privacy Policy for the full account.',
+  },
+  {
+    q: "What translations are included, and are they all in the app from the start?",
+    a: 'All five — WEB, KJV, ASV, YLT, and Douay-Rheims — ship in the app from install, in every reading theme, with no translation gated behind a purchase.',
+  },
+];
+---
+
+<Layout
+  title="Support — GraceSoft Proverbs"
+  description="Official contact channel and frequently asked questions for GraceSoft Proverbs."
+  page="support"
+>
+  <div class="legal-wrap">
+    <div class="legal-header">
+      <span class="eyebrow accent">Support</span>
+      <h1>We're glad to help</h1>
+      <p class="legal-updated">
+        For anything not covered below, reach out directly.
+      </p>
+    </div>
+
+    <div class="contact-card">
+      <span class="eyebrow">Contact</span>
+      <h2>davinaleong@gracesoft.com</h2>
+      <p>
+        The official channel for support, feedback, and press. We read
+        every message — expect a reply within a few business days.
+      </p>
+      <a
+        class="btn btn-fill"
+        href="mailto:davinaleong@gracesoft.com?subject=Support%20—%20GraceSoft%20Proverbs"
+        >Email us</a
+      >
+    </div>
+
+    <div class="section-head" style="margin-bottom: 0;">
+      <span class="eyebrow">FAQ</span>
+      <h2 style="font-family: 'Playfair Display', serif; font-weight: 500; font-size: clamp(1.6rem, 3vw, 2.1rem); margin: 10px 0 0;">
+        Frequently asked questions
+      </h2>
+    </div>
+
+    <div class="faq-list">
+      {
+        faqs.map((item) => (
+          <div class="faq-item">
+            <h3>{item.q}</h3>
+            <p>{item.a}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</Layout>

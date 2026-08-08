@@ -1,0 +1,144 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const sections = [
+  { id: 'acceptance-of-terms', label: 'Acceptance of terms' },
+  { id: 'license-to-use-the-app', label: 'License to use the app' },
+  { id: 'the-translations', label: 'The translations' },
+  { id: 'no-warranty', label: 'No warranty' },
+  { id: 'limitation-of-liability', label: 'Limitation of liability' },
+  { id: 'cost', label: 'Cost' },
+  { id: 'acceptable-use', label: 'Acceptable use' },
+  { id: 'termination', label: 'Termination' },
+  { id: 'governing-law', label: 'Governing law' },
+  { id: 'changes-to-these-terms', label: 'Changes to these terms' },
+  { id: 'contact-us', label: 'Contact us' },
+];
+---
+
+<Layout
+  title="Terms & Conditions — GraceSoft Proverbs"
+  description="The license, disclaimers, and terms covering use of GraceSoft Proverbs."
+  page="terms"
+>
+  <div class="legal-wrap">
+    <div class="legal-header">
+      <span class="eyebrow accent">Legal</span>
+      <h1>Terms &amp; Conditions</h1>
+      <p class="legal-updated">Last updated: 8 August 2026</p>
+    </div>
+
+    <div class="legal-notice">
+      These terms are a drafted starting point and have not yet been
+      reviewed by a lawyer. Treat them as a plain-language description of
+      intent, not as legal advice, until that review has happened.
+    </div>
+
+    <nav class="legal-toc" aria-label="Table of contents">
+      <p>On this page</p>
+      <ol>
+        {
+          sections.map((s) => (
+            <li>
+              <a href={`#${s.id}`}>{s.label}</a>
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+
+    <div class="legal-body">
+      <h2 id="acceptance-of-terms">Acceptance of terms</h2>
+      <p>
+        By downloading, installing, or using GraceSoft Proverbs (the
+        "app"), you agree to these Terms &amp; Conditions. If you don't
+        agree with them, please don't install or use the app.
+      </p>
+
+      <h2 id="license-to-use-the-app">License to use the app</h2>
+      <p>
+        We grant you a personal, non-exclusive, non-transferable,
+        revocable license to install and use the app on devices you own
+        or control, for your own personal reading. This license doesn't
+        give you any right to redistribute, resell, sublicense, decompile,
+        or reverse-engineer the app itself, or to remove any copyright or
+        attribution notices it contains.
+      </p>
+
+      <h2 id="the-translations">The translations</h2>
+      <p>
+        The app bundles five public-domain Bible translations — the World
+        English Bible (2000), King James Version (1611), American
+        Standard Version (1901), Young's Literal Translation (1898), and
+        the Douay-Rheims (1610, Challoner revision 1752). Because these
+        texts are in the public domain, their use in the app carries no
+        separate license fee or royalty. Public-domain status doesn't
+        change how these Terms apply to the app itself.
+      </p>
+
+      <h2 id="no-warranty">No warranty</h2>
+      <p>
+        The app is provided "as is" and "as available," without warranty
+        of any kind, express or implied, including without limitation any
+        warranty of merchantability, fitness for a particular purpose, or
+        non-infringement. We don't warrant that the app will be
+        error-free, uninterrupted, or free of defects, or that any verse
+        text is free of transcription error, though we take reasonable
+        care to bundle accurate public-domain source texts.
+      </p>
+
+      <h2 id="limitation-of-liability">Limitation of liability</h2>
+      <p>
+        To the fullest extent permitted by law, GraceSoft will not be
+        liable for any indirect, incidental, special, consequential, or
+        punitive damages, or any loss of data, arising out of or related
+        to your use of, or inability to use, the app.
+      </p>
+
+      <h2 id="cost">Cost</h2>
+      <p>
+        The app is free to download and use. There are no subscriptions,
+        no in-app purchases, and no advertising. Every translation and
+        every reading theme is included from install, and this is not
+        expected to change for a paid tier later.
+      </p>
+
+      <h2 id="acceptable-use">Acceptable use</h2>
+      <p>
+        You agree to use the app only for lawful purposes and in a way
+        that doesn't infringe the rights of, or restrict or inhibit the
+        use and enjoyment of the app by, anyone else. You may not attempt
+        to extract, repackage, or redistribute the bundled translation
+        text as a standalone product.
+      </p>
+
+      <h2 id="termination">Termination</h2>
+      <p>
+        This license continues until you delete the app or until we
+        discontinue it. Because there's no account and nothing stored on
+        our servers, termination on your end is as simple as uninstalling
+        the app — there's nothing further to close out.
+      </p>
+
+      <h2 id="governing-law">Governing law</h2>
+      <p>
+        The governing jurisdiction for these Terms has not yet been
+        finalized and will be confirmed alongside the legal review noted
+        at the top of this page.
+      </p>
+
+      <h2 id="changes-to-these-terms">Changes to these terms</h2>
+      <p>
+        If these Terms change, the "Last updated" date at the top of this
+        page will change with it. Continued use of the app after a change
+        takes effect means you accept the revised Terms.
+      </p>
+
+      <h2 id="contact-us">Contact us</h2>
+      <p>
+        Questions about these Terms can be sent to <a href="mailto:davinaleong@gracesoft.com">davinaleong@gracesoft.com</a>. See the <a href="/support">Support</a> page for other ways to
+        reach us.
+      </p>
+    </div>
+  </div>
+</Layout>

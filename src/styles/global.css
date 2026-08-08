@@ -360,6 +360,7 @@ footer {
   font-weight: 500;
   font-size: 1.6rem;
   margin: 8px 0 12px;
+  overflow-wrap: break-word;
 }
 .contact-card p {
   color: var(--text-secondary);
@@ -380,5 +381,20 @@ footer {
   }
   .btn {
     width: 100%;
+  }
+  .wrap {
+    padding: 0 18px;
+  }
+  .nav-actions {
+    gap: 10px;
+  }
+  .nav-link {
+    font-size: 0.76rem;
+  }
+  .wordmark .g {
+    font-size: 0.92rem;
+  }
+  .wordmark .p {
+    font-size: 1rem;
   }
 }

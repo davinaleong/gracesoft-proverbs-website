@@ -21,8 +21,27 @@ The brief describes four static HTML files sharing `assets/styles.css` / `assets
 
 **Not done yet:** Privacy, Terms, Support pages; cross-page consistency pass; responsive/a11y QA pass; anything under "Pre-launch" or "Post-launch" in the milestone checklist (those depend on real store URLs, legal review, a real publish date — out of scope for this implementation pass).
 
+## Session 2 — Privacy, Terms, Support + cross-page QA
+
+**Built:**
+
+- `src/pages/privacy.astro` — 10-section policy (overview, what we collect, device-only settings, notifications, no tracking/analytics, third-party services, children's privacy, retention/deletion, changes, contact), legal-article layout with a two-column TOC, "not reviewed by a lawyer" notice per the brief.
+- `src/pages/terms.astro` — 11-section terms (acceptance, license, the translations, no warranty, limitation of liability, cost, acceptable use, termination, governing law, changes, contact), same layout and legal notice. Governing law is left as an explicit placeholder pending real legal review — no jurisdiction was specified anywhere in `_internal-docs/`.
+- `src/pages/support.astro` — contact card (`mailto:`) plus a 10-item FAQ, hairline-divided, no accordion, per the brief. Covers the three topics the milestone checklist calls out by name (notification permission timing, offline behavior, settings reset on reinstall) plus platform/cost/account/translation basics.
+
+**Bugs found and fixed during verification, both real:**
+
+1. **Astro whitespace collapse:** wherever a paragraph's source had a line break immediately before an inline `<a>`/`<code>` tag, Astro's compiler dropped the whitespace entirely instead of collapsing it to one space (confirmed via raw HTML: `sent to<a href=...>`, `for<code>...`). Fixed in `privacy.astro` and `terms.astro` by keeping inline links on the same source line as the text before them, rather than trusting HTML's normal newline-to-space collapsing.
+2. **Mobile nav overflow:** the four-page nav (wordmark + Privacy/Terms/Support + toggle) overflowed the viewport at 375px — `nav-actions` needed 242px but only had ~186px available. Fixed with a `520px` media query in `global.css` that tightens the nav gap, link font-size, and wordmark size, plus reduces `.wrap` padding slightly. Verified zero horizontal overflow afterward via `document.documentElement.scrollWidth`.
+3. **Support page mobile overflow:** the contact card's `<h2>davinaleong@gracesoft.com</h2>` is one unbroken string with no spaces, so it didn't wrap at 375px and pushed the page 13px wider than the viewport. Fixed with `overflow-wrap: break-word` on `.contact-card h2`.
+
+**Verified:** all four routes return 200 with no console errors; nav `.current` highlight confirmed correct on all three inner pages and absent on Home via raw HTML; light/dark toggle confirmed working; TOC `href`s on Privacy/Terms confirmed to match heading `id`s 1:1; zero horizontal overflow confirmed at 375px, 860px, and 1440px on all four pages after the fixes above; every interactive element is a native `<a>`/`<button>`, so keyboard reachability holds by construction.
+
+**Updated `02-milestone-checklist.md`** to check off everything verified this session (see the file for the full list) — legal review, jurisdiction, the launch-order business decision, font offline-loading, the OG image, and color-contrast/screen-reader audits are explicitly left unchecked since they need either a real lawyer, a real decision from the site owner, or tooling beyond what was used here.
+
 ## Open questions for the site owner (not blocking, tracked here so they aren't lost)
 
 - Legal review of Privacy/Terms hasn't happened — both pages will ship with the "not reviewed by a lawyer" notice the brief calls for, per `02-milestone-checklist.md`'s first item.
 - No `02-technical-document.md` or `04-app-themes.md` exist in `_internal-docs/` (both are referenced by the brief/checklist). Theme hex values were instead spot-checked against `03-brand-guidelines.md` and the mockup HTML directly.
 - Support page FAQ content (notification permission timing, offline behavior, settings-reset-on-reinstall) is being drafted from the app description in the brief, since no separate app-behavior spec exists in this repo. Flagged for a real QA pass once the app itself exists to check against.
+- Terms' "Governing law" section is a placeholder (no jurisdiction named anywhere in `_internal-docs/`) — needs a real value from the site owner before legal review.

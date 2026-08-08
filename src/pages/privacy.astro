@@ -1,0 +1,143 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const sections = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'what-we-collect', label: 'What we collect' },
+  { id: 'device-only-settings', label: 'Device-only settings' },
+  { id: 'notifications', label: 'Notifications' },
+  { id: 'no-tracking-or-analytics', label: 'No tracking or analytics' },
+  { id: 'third-party-services', label: 'Third-party services' },
+  { id: 'childrens-privacy', label: "Children's privacy" },
+  { id: 'data-retention-and-deletion', label: 'Data retention and deletion' },
+  { id: 'changes-to-this-policy', label: 'Changes to this policy' },
+  { id: 'contact-us', label: 'Contact us' },
+];
+---
+
+<Layout
+  title="Privacy Policy — GraceSoft Proverbs"
+  description="A plain-language account of what GraceSoft Proverbs does and doesn't collect."
+  page="privacy"
+>
+  <div class="legal-wrap">
+    <div class="legal-header">
+      <span class="eyebrow accent">Legal</span>
+      <h1>Privacy Policy</h1>
+      <p class="legal-updated">Last updated: 8 August 2026</p>
+    </div>
+
+    <div class="legal-notice">
+      This policy is a drafted starting point and has not yet been reviewed
+      by a lawyer. Treat it as a plain-language description of intent, not
+      as legal advice, until that review has happened.
+    </div>
+
+    <nav class="legal-toc" aria-label="Table of contents">
+      <p>On this page</p>
+      <ol>
+        {
+          sections.map((s) => (
+            <li>
+              <a href={`#${s.id}`}>{s.label}</a>
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+
+    <div class="legal-body">
+      <h2 id="overview">Overview</h2>
+      <p>
+        GraceSoft Proverbs is built around a simple idea: the app should
+        work fully on your device, with nothing sent anywhere. This policy
+        explains, plainly, what that means for your data — which, in
+        short, is that we don't collect any.
+      </p>
+
+      <h2 id="what-we-collect">What we collect</h2>
+      <p>
+        We do not collect, receive, or have access to any personal
+        information through the app. There is no account to create, no
+        sign-in, and no server that the app talks to for its day-to-day
+        reading experience. All five translations and all reading themes
+        are bundled into the app at install time, so reading a chapter
+        never sends a request anywhere.
+      </p>
+
+      <h2 id="device-only-settings">Device-only settings</h2>
+      <p>
+        Preferences — your chosen translation, reading theme, font size,
+        serif/sans setting, verse-number visibility, and notification
+        time — are stored locally on your device only. We never see these
+        values, and they never leave your device unless you back up or
+        transfer your device using your platform's own backup tools,
+        which are governed by Apple's or Google's privacy practices, not
+        ours.
+      </p>
+
+      <h2 id="notifications">Notifications</h2>
+      <p>
+        The optional daily reading reminder is scheduled entirely on your
+        device using your operating system's local notification
+        scheduler. The app requests notification permission only at the
+        moment you turn the reminder on — never on first launch, and
+        never for any other purpose. No notification content or schedule
+        is transmitted to us or to any third party.
+      </p>
+
+      <h2 id="no-tracking-or-analytics">No tracking or analytics</h2>
+      <p>
+        The app contains no analytics software development kit, no crash
+        reporter that phones home, no advertising identifier, and no
+        third-party tracking library. We do not know how often the app is
+        opened, which translation is most read, or anything else about
+        how you use it. This microsite follows the same rule: no
+        analytics or tracking scripts run on any of its four pages.
+      </p>
+
+      <h2 id="third-party-services">Third-party services</h2>
+      <p>
+        Installing the app involves the App Store or Google Play, which
+        collect their own installation and purchase data under their own
+        privacy policies — that data is between you and the platform, not
+        something we receive. This website is served as static files with
+        no backend of its own; loading the <code>fonts.googleapis.com</code>
+        fonts (Playfair Display and Montserrat) is handled per Google's own
+        privacy practices, not ours.
+      </p>
+
+      <h2 id="childrens-privacy">Children's privacy</h2>
+      <p>
+        Because the app collects no personal information from anyone,
+        there is nothing collected from children either. The app and this
+        site are not directed at collecting information from any age
+        group, by design rather than by an age gate.
+      </p>
+
+      <h2 id="data-retention-and-deletion">Data retention and deletion</h2>
+      <p>
+        There is nothing on our servers to retain or delete, because there
+        is no server-side storage of your data in the first place.
+        Deleting the app removes every setting stored on your device
+        along with it — there is no account to separately close and no
+        remote copy of your preferences to request the deletion of.
+      </p>
+
+      <h2 id="changes-to-this-policy">Changes to this policy</h2>
+      <p>
+        If this policy changes, the "Last updated" date at the top of this
+        page will change with it. Because the app has no way to push
+        notices to you directly, meaningful changes will also be reflected
+        on this page's Home section and, once available, in the app's own
+        release notes.
+      </p>
+
+      <h2 id="contact-us">Contact us</h2>
+      <p>
+        Questions about this policy can be sent to <a href="mailto:davinaleong@gracesoft.com">davinaleong@gracesoft.com</a>. See the <a href="/support">Support</a> page for other ways to
+        reach us.
+      </p>
+    </div>
+  </div>
+</Layout>
