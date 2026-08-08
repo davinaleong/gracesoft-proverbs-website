@@ -39,6 +39,23 @@ The brief describes four static HTML files sharing `assets/styles.css` / `assets
 
 **Updated `02-milestone-checklist.md`** to check off everything verified this session (see the file for the full list) — legal review, jurisdiction, the launch-order business decision, font offline-loading, the OG image, and color-contrast/screen-reader audits are explicitly left unchecked since they need either a real lawyer, a real decision from the site owner, or tooling beyond what was used here.
 
+## Session 3 — DPO section + contact form embed space
+
+**Requested by the site owner:** name a Data Protection Officer on the Privacy page, and reserve layout space on Support for an embedded contact form (in addition to the existing `mailto:` contact card).
+
+**Built:**
+
+- `src/pages/privacy.astro` — new "Data Protection Officer" section (between "Data retention and deletion" and "Changes to this policy"), naming Davina Leong as DPO and the contact point for access/correction/deletion requests. Added to the TOC.
+- `src/pages/support.astro` — new "Contact form" area between the existing contact card and the FAQ. Controlled by a `contactFormEmbedUrl` constant at the top of the file: empty (current state) renders a dashed-border placeholder explaining what goes there; setting it to a real embed URL (Google Form, Tally, Typeform, etc.) swaps in a live `<iframe>` automatically — no other code changes needed.
+- `src/styles/global.css` — `.iframe-embed` / `.iframe-embed--placeholder` styles, sized so the reserved space (320px min-height) reads intentionally rather than like a layout gap. Also added Source Code Pro (the brand's monospace font, per `03-brand-guidelines.md`) to the Google Fonts import, since the placeholder text references a variable name in `<code>`.
+- Updated `01-design-brief.md`'s "Non-goals" section — it previously said "no contact form or backend," which this reverses. Noted that the iframe is a client-side embed of a third-party form, not a backend the site itself hosts, so the "no CMS/backend" spirit still holds. Also added a content-principle line naming the DPO.
+
+**Caught and fixed while writing this:** the DPO paragraph's mailto link was drafted with a line break right before the `<a>` tag — the same Astro whitespace-collapse issue from Session 2. Fixed by keeping it on one line before verifying.
+
+**Verified:** both pages render with no console errors, no whitespace-collapse artifacts (checked via the same raw-HTML grep as Session 2), and no horizontal overflow at 375px or desktop width.
+
+**Still open:** `contactFormEmbedUrl` is empty — the actual form (and which service to use) is up to the site owner to set up and paste in.
+
 ## Open questions for the site owner (not blocking, tracked here so they aren't lost)
 
 - Legal review of Privacy/Terms hasn't happened — both pages will ship with the "not reviewed by a lawyer" notice the brief calls for, per `02-milestone-checklist.md`'s first item.

@@ -1,6 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
+// Paste the embed URL (Google Form, Tally, Typeform, etc.) here once the
+// contact form exists. Leaving this empty renders a placeholder in its
+// place so the layout is ready to receive it.
+const contactFormEmbedUrl = '';
+
 const faqs = [
   {
     q: 'What platforms is GraceSoft Proverbs available on?',
@@ -72,6 +77,31 @@ const faqs = [
         >Email us</a
       >
     </div>
+
+    <div class="section-head" style="margin-bottom: 24px;">
+      <span class="eyebrow">Contact form</span>
+      <h2 style="font-family: 'Playfair Display', serif; font-weight: 500; font-size: clamp(1.6rem, 3vw, 2.1rem); margin: 10px 0 0;">
+        Or send a message directly
+      </h2>
+    </div>
+
+    {
+      contactFormEmbedUrl ? (
+        <div class="iframe-embed">
+          <iframe
+            src={contactFormEmbedUrl}
+            title="Contact GraceSoft"
+            loading="lazy"
+          />
+        </div>
+      ) : (
+        <div class="iframe-embed iframe-embed--placeholder">
+          <p>
+            Contact form embed reserved here. Set <code>contactFormEmbedUrl</code> in <code>src/pages/support.astro</code> to the form's embed URL once it's ready, and this space will hold the live form.
+          </p>
+        </div>
+      )
+    }
 
     <div class="section-head" style="margin-bottom: 0;">
       <span class="eyebrow">FAQ</span>

@@ -57,6 +57,7 @@ The site defaults to the visitor's OS preference (`prefers-color-scheme`) and ex
 - **Launch status stays accurate.** Copy currently reads "iOS first, Android to follow" — update this in both the hero and the closing CTA together if the rollout order changes again, and check `02-technical-document.md` for consistency.
 - **No quoted scripture in mockups.** The phone mockup uses styled placeholder bars rather than real verse text, so the marketing page can't misquote a translation or go stale if wording is refined later.
 - **Legal pages are a drafted starting point, not counsel.** Both `privacy.html` and `terms.html` carry a visible note that they haven't been reviewed by a lawyer — keep that note until they have been.
+- **Named Data Protection Officer.** Davina Leong is the DPO and the named contact for privacy requests; `privacy.html` carries a dedicated "Data Protection Officer" section naming her, separate from the general "Contact us" section.
 
 ## Layout & responsiveness
 
@@ -67,4 +68,4 @@ The site defaults to the visitor's OS preference (`prefers-color-scheme`) and ex
 
 - No CMS or templating — four static files are simpler to maintain than the alternative, in keeping with the app's own "minimize ongoing maintenance" philosophy.
 - No analytics or tracking scripts, matching the app's privacy stance.
-- No contact form or backend — `mailto:` links only, so the site has nothing to host beyond static files.
+- No custom backend — the `mailto:` CTAs stay as the primary contact path. **Updated:** Support now also reserves a space for an embedded third-party contact form (`.iframe-embed` on `support.astro`, currently a placeholder — set `contactFormEmbedUrl` once a form exists). It's a client-side `<iframe>` embed, not a form the site itself hosts or processes, so this doesn't add a backend of our own.
