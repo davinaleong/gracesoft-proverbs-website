@@ -78,6 +78,18 @@ The brief describes four static HTML files sharing `assets/styles.css` / `assets
 
 **Worth knowing for future JS-inserted DOM in this project:** any element created client-side in an Astro page needs its styling rules either in `global.css` or wrapped in `:global()` inside the page's scoped `<style>` block — scoped selectors never match runtime-created nodes.
 
+## Session 6 — bigger calendar numbers
+
+**Requested:** make the day numbers in the Home calendar strip bigger — they were hard to read at `0.58rem`.
+
+**Built:** bumped `.cal-cell` to `0.72rem`.
+
+**Bug introduced and caught in the same pass:** first attempt also bumped the font size further (to `0.9rem`) specifically at the 860px/15-column breakpoint, on the theory that wider cells there had room for it. That broke 375px: "31" at 0.9rem no longer fit in a 15-column row at that width, and because CSS Grid's `1fr` tracks default to `min-width: auto` (never shrinking below their content's min-content size), the oversized digit pushed the whole grid — and the page — 13px past the viewport, reintroducing exactly the horizontal-overflow bug fixed in Session 2. Caught by the same overflow check used in Session 2 (`document.documentElement.scrollWidth` vs `clientWidth`) before it shipped.
+
+**Fix:** dropped the breakpoint-specific size (0.72rem now applies everywhere and reads fine at all three tested widths), and changed `.cal-grid`'s columns from `repeat(N, 1fr)` to `repeat(N, minmax(0, 1fr))` at both the 31-column and 15-column definitions. `minmax(0, 1fr)` overrides Grid's automatic content-based minimum, so a track can shrink to fit its allotted space even if that's narrower than its content's natural width — this is the standard defense against exactly this failure mode, and makes the calendar strip robust against future font/content-size changes without needing to re-verify every breakpoint by hand.
+
+**Verified:** no horizontal overflow at 375px, 860px, or desktop width; "31" renders cleanly at all three; today's highlight (Session 5's fix) still applies since `:global(.cal-cell)` wasn't touched.
+
 ## Open questions for the site owner (not blocking, tracked here so they aren't lost)
 
 - Legal review of Privacy/Terms hasn't happened — both pages will ship with the "not reviewed by a lawyer" notice the brief calls for, per `02-milestone-checklist.md`'s first item.
