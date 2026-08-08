@@ -76,21 +76,21 @@ header.nav {
 }
 .wordmark {
   display: flex;
-  align-items: baseline;
-  gap: 6px;
-  font-weight: 500;
+  align-items: center;
 }
-.wordmark .g {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 1.05rem;
-  letter-spacing: 0.01em;
-  color: var(--text-primary);
+.wordmark-logo {
+  height: 28px;
+  width: auto;
+  display: block;
 }
-.wordmark .p {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: 1.15rem;
-  color: var(--accent);
+.wordmark-logo-dark {
+  display: none;
+}
+html[data-theme='dark'] .wordmark-logo-light {
+  display: none;
+}
+html[data-theme='dark'] .wordmark-logo-dark {
+  display: block;
 }
 .nav-actions {
   display: flex;
@@ -431,10 +431,7 @@ footer {
   .nav-link {
     font-size: 0.76rem;
   }
-  .wordmark .g {
-    font-size: 0.92rem;
-  }
-  .wordmark .p {
-    font-size: 1rem;
+  .wordmark-logo {
+    height: 22px;
   }
 }
